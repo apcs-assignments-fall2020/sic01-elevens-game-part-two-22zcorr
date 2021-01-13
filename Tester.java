@@ -18,5 +18,7 @@ public class Tester
         
         d1.shuffle();
         System.out.println(d1);
+
+        
     }
 }

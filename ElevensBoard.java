@@ -51,8 +51,11 @@ public class ElevensBoard extends Board {
      */
     @Override
     public boolean isLegal(List<Integer> selectedCards) {
-        // YOUR CODE HERE
-        return false;
+        if(containsJQK(selectedCards)||containsPairSum11(selectedCards)){
+          return true;
+        }else{
+          return false;
+        }
     }
 
     /**
@@ -69,8 +72,25 @@ public class ElevensBoard extends Board {
         // all cards on the board
         List<Integer> selectedCards = cardIndexes();
 
+        boolean another = false;
+        for(int i = 0; i<7;i++){
+          Card first = get(i);
+          Card second = get(i+1);
+          Card third = get(i+2);
+          List<Card> one = new ArrayList<Card>();
+          one.add(first);
+          one.add(second);
+          List<Card> two = new ArrayList<Card>();
+          two.add(first);
+          two.add(second);
+          two.add(third);
+
+          if(containsPairSum11(one)){another = true;}
+          if(containsJQK(two)){another = true;}
+        }
+
         // YOUR CODE HERE
-        return true;
+        return another;
     }
 
     /**
@@ -82,8 +102,8 @@ public class ElevensBoard extends Board {
      *         otherwise.
      */
     private boolean containsPairSum11(List<Integer> selectedCards) {
-        // YOUR CODE HERE
-        return false;
+        if((selectedCards.size())!=2){return false;}
+        return Integer.parseInt(cardAt(selectedCards.get(0)).getRank())+Integer.parseInt(cardAt(selectedCards.get(1)).getRank())==11;
     }
 
     /**
@@ -95,7 +115,11 @@ public class ElevensBoard extends Board {
      *         and a king; false otherwise.
      */
     private boolean containsJQK(List<Integer> selectedCards) {
-        // YOUR CODE HERE
-        return false;
+        if((selectedCards.size())!=3){return false;}
+        int i = 0;
+        if(cardAt(selectedCards.get(0)).getRank().equals("queen")||cardAt(selectedCards.get(1)).getRank().equals("queen")||cardAt(selectedCards.get(2)).getRank().equals("queen")){i+=1;}
+        if(cardAt(selectedCards.get(0)).getRank().equals("king")||cardAt(selectedCards.get(1)).getRank().equals("king")||cardAt(selectedCards.get(2)).getRank().equals("king")){i+=1;}
+        if(cardAt(selectedCards.get(0)).getRank().equals("jack")||cardAt(selectedCards.get(1)).getRank().equals("jack")||cardAt(selectedCards.get(2)).getRank().equals("jack")){i+=1;}
+        return i==3;
     }
 }
